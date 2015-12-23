@@ -19,9 +19,10 @@ var migrate = Promise.coroutine(function* (options) {
     var connectionString = options.connectionString;
     var targetVersion = options.targetVersion || 0;
     var currentPath = options.path || '.';
+    var tableName = options.tableName || 'version';
 
     try {
-        var persister = yield persisterProvider.create(connectionString, 'version');
+        var persister = yield persisterProvider.create(connectionString, tableName);
 
         yield persister.beginTransaction();
 
@@ -39,6 +40,7 @@ var migrate = Promise.coroutine(function* (options) {
     } catch(error) {
 
         if (error) {
+            console.log(error.stack);
             console.error(colors.error(messages.MIGRATION_ERROR + error));
         }
 
