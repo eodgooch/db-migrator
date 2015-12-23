@@ -3,6 +3,8 @@
 "use strict";
 
 var migrate = require("../migrate");
+var ValidationService = require("../lib/application/service/validation-service");
+var messages = require("../lib/infrastructure/messages");
 
 // First argument : connectionString (mandatory)
 // Second argument : target version (optional)

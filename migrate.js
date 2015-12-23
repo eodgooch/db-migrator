@@ -3,8 +3,8 @@
 var fs = require("fs");
 var path = require("path");
 var colors = require("colors/safe");
-var Pgb = require("pg-bluebird");
 var messages = require("./lib/infrastructure/messages");
+var persisterProvider = require("./lib/domain/persister/postgres");
 
 colors.setTheme({
     verbose: 'cyan',
@@ -18,40 +18,32 @@ function migrate (options) {
     var targetVersion = options.targetVersion || 0;
     var currentPath = options.path || '.';
 
-    var connection;
     var currentPersister;
     var currentVersion;
 
-    var persisterProvider = new Pgb();
-
-    // Connecting to PostgreSQL
-    return persisterProvider.connect(connectionString)
+    return persisterProvider.create(connectionString, 'version')
         .then(function (persister) {
+            currentPersister = persister;
 
-            connection = persister;
-            currentPersister = persister.client;
-
-            // Starting transaction
-            return currentPersister.query("BEGIN TRANSACTION");
+            return currentPersister.beginTransaction();
         })
         .then(function () {
-            return getMigrationService(currentPersister).migrate(currentPath, targetVersion);
+            var migrationService = getMigrationService(currentPersister);
+
+            return migrationService.migrate(currentPath, targetVersion);
         })
         .then(function (curVer) {
 
             currentVersion = curVer;
 
-            // Migration has been completed successfully, committing the transaction
-            return currentPersister.query("COMMIT");
+            return currentPersister.commitTransaction();
         })
         .then(function () {
 
-            connection.done();
+            persisterProvider.done();
 
             console.log(colors.info("--------------------------------------------------"));
             console.log(colors.info(messages.MIGRATION_COMPLETED + currentVersion));
-
-            // process.exit(0);
         })
         .catch(function (error) {
             // Migration failed
@@ -60,9 +52,7 @@ function migrate (options) {
                 console.error(colors.error(messages.MIGRATION_ERROR + error));
             }
 
-            if (connection) {
-                connection.done();
-            }
+            persisterProvider.done();
 
             // Rethrow error
             throw error;
