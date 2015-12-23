@@ -5,6 +5,7 @@ var path = require("path");
 var colors = require("colors/safe");
 var messages = require("./lib/infrastructure/messages");
 var persisterProvider = require("./lib/domain/persister/postgres");
+var Promise = require("bluebird");
 
 colors.setTheme({
     verbose: 'cyan',
@@ -13,51 +14,41 @@ colors.setTheme({
     error: 'red'
 });
 
-function migrate (options) {
+var migrate = Promise.coroutine(function* (options) {
+
     var connectionString = options.connectionString;
     var targetVersion = options.targetVersion || 0;
     var currentPath = options.path || '.';
 
-    var currentPersister;
-    var currentVersion;
+    try {
+        var persister = yield persisterProvider.create(connectionString, 'version');
 
-    return persisterProvider.create(connectionString, 'version')
-        .then(function (persister) {
-            currentPersister = persister;
+        yield persister.beginTransaction();
 
-            return currentPersister.beginTransaction();
-        })
-        .then(function () {
-            var migrationService = getMigrationService(currentPersister);
+        var migrationService = getMigrationService(persister);
 
-            return migrationService.migrate(currentPath, targetVersion);
-        })
-        .then(function (curVer) {
+        var currentVersion = yield migrationService.migrate(currentPath, targetVersion);
 
-            currentVersion = curVer;
+        yield persister.commitTransaction();
 
-            return currentPersister.commitTransaction();
-        })
-        .then(function () {
+        persister.done();
 
-            persisterProvider.done();
+        console.log(colors.info("--------------------------------------------------"));
+        console.log(colors.info(messages.MIGRATION_COMPLETED + currentVersion));
 
-            console.log(colors.info("--------------------------------------------------"));
-            console.log(colors.info(messages.MIGRATION_COMPLETED + currentVersion));
-        })
-        .catch(function (error) {
-            // Migration failed
+    } catch(error) {
 
-            if (error) {
-                console.error(colors.error(messages.MIGRATION_ERROR + error));
-            }
+        if (error) {
+            console.error(colors.error(messages.MIGRATION_ERROR + error));
+        }
 
-            persisterProvider.done();
+        if (persister) {
+            persister.done();
+        }
 
-            // Rethrow error
-            throw error;
-        });
-}
+        throw error;
+    };
+});
 
 var getMigrationService = function (persister) {
 
