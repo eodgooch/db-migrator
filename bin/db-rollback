@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+"use strict";
+
+var migrate = require("../lib/migrate");
+var config = require("./env").getConfig();
+
+migrate({
+    connectionString: config.connectionString,
+    path: config.scriptsPath,
+    tableName: config.tableName,
+    targetVersion: config.targetVersion || "-1"
+}).then(function() {
+	process.exit(0);
+}).catch(function() {
+	process.exit(1);
+});

@@ -2,7 +2,7 @@
 
 "use strict";
 
-var migrate = require("../migrate");
+var migrate = require("../lib/migrate");
 var ValidationService = require("../lib/application/service/validation-service");
 var messages = require("../lib/infrastructure/messages");
 
@@ -19,7 +19,7 @@ if (!isValid) {
 
 var connectionString = args[0];
 var targetVersion = 0;
-var migrationScriptsPath = '.';
+var migrationScriptsPath = ".";
 
 // if targetVersion stays 0 means that, target version does not provided by user
 // so it will be obtained from script files (the biggest target version number in all files)

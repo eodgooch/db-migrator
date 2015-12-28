@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+
+"use strict";
+
+var status = require("../lib/status");
+var config = require("./env").getConfig();
+
+status({
+    connectionString: config.connectionString,
+    path: config.scriptsPath,
+    tableName: config.tableName
+}).then(function() {
+    process.exit(0);
+}).catch(function() {
+    process.exit(1);
+});

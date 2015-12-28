@@ -1,65 +1,61 @@
 {
-    "name": "pg-migrator",
-    "description": "The complete and easy to use command-line migration tool for PostgreSQL",
-    "version": "1.0.5",
-    "main": "lib",
-    "bin": {
-        "pg-migrator": "bin/pg-migrator"
-    },
-    "directories": {
-        "test": "test"
-    },
-    "homepage": "https://github.com/Aphel-Cloud-Solutions/pg-migrator/",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/Aphel-Cloud-Solutions/pg-migrator.git"
-    },
-    "bugs": {
-        "url": "https://github.com/Aphel-Cloud-Solutions/pg-migrator/issues/",
-        "email": "lkaragol@aphel.com.tr"
-    },
-    "author": {
-        "name": "Aphel Cloud Solutions",
-        "email": "lkaragol@aphel.com.tr",
-        "url": "http://www.aphel.com.tr/"
-    },
-    "dependencies": {
-        "bluebird": "2.x",
-        "pg-bluebird": "1.x",
-        "underscore": "1.x",
-        "colors": "1.x"
-    },
-    "devDependencies": {
-        "jasmine-node": "1.x"
-    },
-    "scripts": {
-        "test": "make test"
-    },
-    "licenses": [
-        {
-            "type": "MIT",
-            "url": "https://raw.githubusercontent.com/Aphel-Cloud-Solutions/pg-migrator/master/LICENSE"
-        }
-    ],
-    "keywords": [
-        "pg",
-        "postgres",
-        "postgresql",
-        "migrate",
-        "migration",
-        "migrator",
-        "pg-migrate",
-        "pg-migration",
-        "pg-migrator",
-        "patch",
-        "patcher",
-        "pg-patch",
-        "pg-patcher",
-        "db",
-        "database",
-        "database migration",
-        "database migrator",
-        "node-postgres",
-        "node-postgresql"
-    ]
+  "name": "db-migrator",
+  "description": "The complete and easy to use database migration tool",
+  "version": "0.0.1",
+  "bin": {
+    "db-migrate": "bin/db-migrate",
+    "db-rollback": "bin/db-rollback",
+    "db-create": "bin/db-create",
+    "db-status": "bin/db-status"
+  },
+  "homepage": "https://github.com/Pajk/db-migrator/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Pajk/db-migrator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Pajk/db-migrator/issues/"
+  },
+  "author": {
+    "name": "Pavel Pokorny",
+    "email": "pajkycz@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Aphel Cloud Solutions",
+      "email": "lkaragol@aphel.com.tr",
+      "url": "http://www.aphel.com.tr/"
+    }
+  ],
+  "dependencies": {
+    "bluebird": "2.x",
+    "colors": "1.x",
+    "lodash": "3.x",
+    "pg-bluebird": "1.x"
+  },
+  "license": "MIT",
+  "keywords": [
+    "pg",
+    "postgres",
+    "postgresql",
+    "migrate",
+    "migration",
+    "migrator",
+    "pg-migrate",
+    "pg-migration",
+    "pg-migrator",
+    "patch",
+    "patcher",
+    "pg-patch",
+    "pg-patcher",
+    "db",
+    "database",
+    "database migration",
+    "database migrator",
+    "node-postgres",
+    "node-postgresql"
+  ],
+  "engines" : {
+    "node" : ">=4.0.0"
+  }
 }
