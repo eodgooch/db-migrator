@@ -9,7 +9,8 @@ migrate({
 	connectionString: config.connectionString,
 	path: config.scriptsPath,
 	tableName: config.tableName,
-	targetVersion: config.targetVersion || 0
+	targetVersion: config.targetVersion || 0,
+    printStatus: true
 }).then(function() {
 	process.exit(0);
 }).catch(function() {

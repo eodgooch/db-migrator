@@ -2,14 +2,15 @@
 
 "use strict";
 
-var migrate = require("../lib/migrate");
+var rollback = require("../lib/rollback");
 var config = require("./env").getConfig();
 
-migrate({
+rollback({
     connectionString: config.connectionString,
     path: config.scriptsPath,
     tableName: config.tableName,
-    targetVersion: config.targetVersion || "-1"
+    targetVersion: config.targetVersion || "-1",
+    printStatus: true
 }).then(function() {
 	process.exit(0);
 }).catch(function() {
