@@ -1,7 +1,7 @@
 {
   "name": "db-migrator",
   "description": "The complete and easy to use database migration tool",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "bin": {
     "db-migrate": "bin/db-migrate",
     "db-rollback": "bin/db-rollback",
@@ -55,7 +55,7 @@
     "node-postgres",
     "node-postgresql"
   ],
-  "engines" : {
-    "node" : ">=4.0.0"
+  "engines": {
+    "node": ">=4.0.0"
   }
 }
