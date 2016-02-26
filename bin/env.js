@@ -9,7 +9,8 @@ module.exports = {
 
         config.connectionString = args[0]
             || process.env.npm_package_config_db_migrator_db_url
-            || process.env.npm_config_db_migrator_db_url;
+            || process.env.npm_config_db_migrator_db_url
+            || "postgresql://localhost";
 
         config.scriptsPath = args[1]
             || process.env.npm_package_config_db_migrator_directory
