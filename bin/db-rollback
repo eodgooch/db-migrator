@@ -10,7 +10,8 @@ rollback({
     path: config.scriptsPath,
     tableName: config.tableName,
     targetVersion: config.targetVersion || "-1",
-    printStatus: true
+    printStatus: true,
+    dbDriver: config.dbDriver
 }).then(function() {
 	process.exit(0);
 }).catch(function() {

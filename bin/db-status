@@ -8,7 +8,8 @@ var config = require("./env").getConfig();
 status({
     connectionString: config.connectionString,
     path: config.scriptsPath,
-    tableName: config.tableName
+    tableName: config.tableName,
+    dbDriver: config.dbDriver
 }).then(function() {
     process.exit(0);
 }).catch(function() {

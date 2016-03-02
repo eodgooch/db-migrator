@@ -1,7 +1,7 @@
 db-migrator
 ===========
 
-The complete and easy to use database migration tool for Node.js projects.
+The complete and easy to use database migration tool for Node.js projects. Supports PostgreSQL and MySQL.
 
 ## Features
 
@@ -16,6 +16,9 @@ The complete and easy to use database migration tool for Node.js projects.
 
 ```
 npm install db-migrator --save
+# and one of
+npm install pg-bluebird --save
+npm install promise-mysql --save
 ```
 
 ## Quick Start
@@ -36,7 +39,10 @@ Add following to your `package.json`:
 Create `.npmrc` and with database connection string:
 
 ```
+# PostgreSQL
 db_migrator_db_url=postgresql://pavel@localhost?ssl=false
+# or MySQL
+db_migrator_db_url=mysql://user:pass@host/db
 ```
 
 Create folder for migrations, by default `migrations`.
@@ -65,14 +71,14 @@ Run `npm run db-status` to see the state of your database.
 
 Use [npm config variables](https://docs.npmjs.com/misc/config) to configure `db-migrator`.
 
-Availble options are:
+Available options are:
 
 * db_url: database connection string
 * directory: name of the migration scripts folder (defaults to `./migrations`)
 * table_name: name of the database table where to store database state (defaults to `migrations`)
 * target: target migration id (timestamp)
 
-All these variables can be set either in `package.json` under `config/db-migrator`: 
+All these variables can be set either in `package.json` under `config/db-migrator`:
 ```
 "config": {
   "db-migrator": {
@@ -112,5 +118,5 @@ This is a fork of [pg-migrator](https://github.com/aphel-bilisim-hizmetleri/pg-m
   * It's possible to get a list of versions migrated in the database
   * Promise coroutines together with ES6 generators are used in the codebase so at least Node.js v4 is required
   * Migration file name can contain a short description of the migration
-  * All Postgres related code is extracted to one module and support for other DBMS will be added eventually
   * Favors npm scripts (and .npmrc config file) but supports also custom execution scripts
+  * MySQL support

@@ -25,6 +25,20 @@ module.exports = {
         config.targetVersion = args[3]
             || process.env.npm_config_db_migrator_target;
 
+        var dbms = config.connectionString.split(":")[0]
+
+        switch (dbms.toLowerCase()) {
+            case "postgresql":
+            case "postgres":
+                config.dbDriver = "postgres"
+                break
+            case "mysql":
+                config.dbDriver = "mysql"
+                break
+            default:
+                throw new Error("The connection string format is not valid: " + config.connectionString)
+        }
+
         return config
     }
 }
