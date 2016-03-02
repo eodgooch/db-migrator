@@ -51,7 +51,7 @@ Create folder for migrations, by default `migrations`.
 
 Run `npm run db-create description of the migration` to generate files for UP and DOWN migration and put your SQL to these files. Migration scripts name has to match pattern `timestamp-[UP|DOWN](-optional-description).sql`.
 
-![Example migration scripts](https://github.com/Pajk/db-migrator/blob/master/doc/db-create.png)
+![Example migration scripts](https://raw.githubusercontent.com/Pajk/db-migrator/master/doc/db-create.png)
 
 ### db-migrate
 
@@ -65,7 +65,8 @@ Run `npm run db-rollback` to rollback one last migration.
 
 Run `npm run db-status` to see the state of your database.
 
-![Example output of db-status](https://github.com/Pajk/db-migrator/blob/master/doc/db-status.png)
+![Example output of db-status](https://raw.githubusercontent.com/Pajk/db-migrator/master/doc/db-status.png)
+
 
 ## Configuration
 
