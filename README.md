@@ -17,7 +17,7 @@ The complete and easy to use database migration tool for Node.js projects. Suppo
 ```
 npm install db-migrator --save
 # and one of
-npm install pg-bluebird --save
+npm install pg --save
 npm install promise-mysql --save
 ```
 
