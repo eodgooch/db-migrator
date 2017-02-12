@@ -1,41 +1,50 @@
-#!/bin/sh
-':' //; exec "$(command -v nodejs || command -v node)" "$0" "$@"
+'use strict'
 
-var migrate = require("db-migrator/lib/migrate")
-var parallel = require("co-parallel")
-var dotenv = require("dotenv")
-var co = require("co")
-var fs = require("fs")
+const migrate = require('db-migrator/lib/migrate')
+const status = require('db-migrator/lib/status')
+const dotenv = require('dotenv')
+const co = require('co')
+const path = require('path')
 
-var env = process.argv[2] || "local"
+const env = process.argv[2] || 'local'
 
-var envs
+let envFile
 
 switch(env) {
-case "staging":
-	envs = [".env-heroku-staging"]; break
-case "production":
-	envs = [".env-heroku-production"]; break
-case "dev":
-	envs = [".env-heroku-dev", ".env-heroku-dev-testflight", ".env-heroku-dev-enterprise"]; break
+case 'staging':
+    envFile = '.env-heroku-staging'; break
+case 'production':
+    envFile = '.env-heroku-production'; break
+case 'dev':
+    envFile = '.env-heroku-dev'; break
 default:
-	envs = [".env"]
+    envFile = '.env'
 }
 
-var migrateEnv = function* (env) {
-	var file = fs.readFileSync(__dirname + "/" + env)
-	var config = dotenv.parse(file)
+dotenv.config({
+    path: path.join(__dirname, envFile),
+})
 
-	yield migrate({connectionString: config.PG_URL, path: "./db-migrations", tableName: "migrations"})
-
-	console.log(env, "migrated")
+const DB_URL = (process.env.PG_URL || process.env.DATABASE_URL) + '?ssl=true'
+if (!DB_URL) {
+    console.error('DB connection string not defined.')
+    process.exit(1)
 }
 
 co(function* () {
-	var jobs = envs.map(migrateEnv)
-	yield parallel(jobs, 1)
-	process.exit(0)
-}).catch(function(e) {
-	process.exit(1)
+    yield status({
+        connectionString: DB_URL,
+        path: './migrations',
+        tableName: 'migrations'
+    })
+    yield migrate({
+        connectionString: DB_URL,
+        path: './migrations',
+        tableName: 'migrations'
+    })
+    console.log(envFile, 'migrated')
+    process.exit(0)
+}).catch(function() {
+    process.exit(1)
 })
 
