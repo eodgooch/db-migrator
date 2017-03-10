@@ -75,7 +75,7 @@ Run `npm run db-status` to see the state of your database.
 
 There's not too much to set up but it's very common to have several deployment and testing environments for each project. There are several ways how to configure DB Migrator so everyone should find an easy way how to plug it in their stack.
 
-Check out [this document](docs/CONFIGURATION.md) to find out more.
+Check out [this document](doc/CONFIGURATION.md) to find out more.
 
 ## Common Pitfalls
 
