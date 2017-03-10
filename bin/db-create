@@ -1,21 +1,15 @@
 #!/usr/bin/env node
 
-var create = require("../lib/create");
+const create = require('../lib/create')
 
-var args = Array.prototype.slice.call(process.argv, 2);
+const titleParts = Array.prototype.slice.call(process.argv, 2)
 
-var scriptsPath = process.env.npm_package_config_db_migrator_directory || process.env.npm_config_db_migrator_directory;
-
-var titleFirstArg = 0;
-
-if (!scriptsPath) {
-    scriptsPath = args[0] || "./migrations";
-    titleFirstArg = 1;
-}
-
-var titleParts = Array.prototype.slice.call(args, titleFirstArg);
+let scriptsPath = process.env.npm_package_config_db_migrator_directory ||
+  process.env.npm_config_db_migrator_directory ||
+  process.env.DB_MIGRATOR_DIR ||
+  './migrations'
 
 create({
-    path: scriptsPath,
-    title: titleParts.join(" ")
-});
+  path: scriptsPath,
+  title: titleParts.join(' ')
+})
