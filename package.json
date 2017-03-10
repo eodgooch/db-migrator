@@ -1,7 +1,7 @@
 {
   "name": "db-migrator",
   "description": "The complete and easy to use database migration tool",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "bin": {
     "db-migrate": "bin/db-migrate",
     "db-rollback": "bin/db-rollback",
@@ -42,10 +42,6 @@
     "pg-migrate",
     "pg-migration",
     "pg-migrator",
-    "patch",
-    "patcher",
-    "pg-patch",
-    "pg-patcher",
     "db",
     "database",
     "database migration",
@@ -55,8 +51,5 @@
   ],
   "engines": {
     "node": ">=7.6.0"
-  },
-  "devDependencies": {
-    "prettier-standard-formatter": "*"
   }
 }
