@@ -14,6 +14,8 @@ Configuration with env variables is most useful when executing migrations on you
 * `DB_MIGRATOR_DIR` - Name of the migration scripts folder (defaults to `./migrations`).
 * `DB_MIGRATOR_TABLE` - Name of the database table where to store the database state (defaults to `migrations`).
 * `DB_MIGRATOR_TARGET` - Target migration id (timestamp).
+* `DB_CONNECT_MAX_ATTEMPTS` - Default `25`. Maximum number of attemps if the database is not running yet (ECONNREFUSED).
+* `DB_CONNECT_NEXT_ATTEMPT_DELAY` - Default `1000`. How long should pg-migrator wait before next attempt to connect to the database.
 
 ### NPM Config Variables
 
