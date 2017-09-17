@@ -16,7 +16,7 @@ module.exports = {
     config.scriptsPath = args[1] ||
       process.env.npm_package_config_db_migrator_directory ||
       process.env.npm_config_db_migrator_directory ||
-      process.env.DB_MIGRATOR_ENV ||
+      process.env.DB_MIGRATOR_DIR ||
       './migrations'
 
     config.tableName = args[2] ||
