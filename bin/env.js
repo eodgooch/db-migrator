@@ -1,5 +1,7 @@
 'use strict'
 
+const fs = require('fs')
+
 module.exports = {
   getConfig: function () {
     const config = {}
@@ -9,7 +11,7 @@ module.exports = {
     config.connectionString = args[0] ||
       process.env.npm_package_config_db_migrator_db_url ||
       process.env.npm_config_db_migrator_db_url ||
-      process.env.DATABASE_URL ||
+      getDatabaseUrl() ||
       process.env.DB_MIGRATOR_URL ||
       'postgresql://localhost'
 
@@ -48,4 +50,16 @@ module.exports = {
 
     return config
   }
+}
+
+function getDatabaseUrl() {
+  if (process.env.DATABASE_URL) {
+    return process.env.DATABASE_URL
+  }
+
+  if (process.env.DATABASE_URL_FILE) {
+    return fs.readFileSync(process.env.DATABASE_URL_FILE, 'utf8').trim()
+  }
+
+  return null
 }

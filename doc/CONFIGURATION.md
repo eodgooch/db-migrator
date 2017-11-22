@@ -11,6 +11,7 @@ My personal favorite because it gives you absolute freedom. There's not much to 
 Configuration with env variables is most useful when executing migrations on your CI (e.g. Travis) or on your servers.  
 
 * `DATABASE_URL` or `DB_MIGRATOR_URL` - Database connection string. 
+* `DATABASE_URL_FILE` - Path to file with the connection string.
 * `DB_MIGRATOR_DIR` - Name of the migration scripts folder (defaults to `./migrations`).
 * `DB_MIGRATOR_TABLE` - Name of the database table where to store the database state (defaults to `migrations`).
 * `DB_MIGRATOR_TARGET` - Target migration id (timestamp).
